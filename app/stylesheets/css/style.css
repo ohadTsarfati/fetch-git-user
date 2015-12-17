@@ -1,0 +1,42 @@
+body{
+	background:lightgray;
+}
+.container{
+	min-height: 500px;
+    border: 3px solid #000000;
+    border-radius: 25px;
+    margin-top: 10px;
+    background: white;
+}
+.query{
+	margin-top:10px;
+}
+.query p{
+	font-size: 16px;
+}
+.query input {
+	margin-right:10px;
+}
+.fetched{
+	list-style-type: none; 
+	font-size: 24px;
+}
+.fetched li{
+	padding:10px;
+	margin:10px;
+	border-radius:10px;
+}
+.fetched li :first-child , .fetched li > p, .fetched li > div{
+	display: inline-block;
+}
+.fetched li p{
+	margin-left:10px;
+}
+.fetched li img{
+	height: 120px;
+}
+.fetched li i:last-child{
+	float:right;
+}
+
+

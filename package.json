@@ -1,0 +1,21 @@
+{
+  "name": "fetch-git",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "snabbdom": "^0.2.7",
+    "whatwg-fetch": "^0.10.1"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "watchify": "^3.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watchify app/js/main.js --outfile=app/js/bundle.js",
+    "build": "browserify app/js/main.js -o app/js/bundle.js"
+  },
+  "author": "Ohad Tsarfati <ohad.tsarfati@gmail.com>",
+  "license": "ISC"
+}
