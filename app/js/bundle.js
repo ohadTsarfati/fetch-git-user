@@ -88,50 +88,45 @@ function updateQuery(event) {
 //updating the data array with an error element or user element
 //according to the fetch result
 function newData(name){
-	//checking if the http request suceeded
+	
 	var dataObj = {};
 	
-	promiseFromGitAPI('repositories','q=+user:' + name).
-	then(settingReposData,addErrorMessage)
-	.then(settingUsersData,addErrorMessage);
+	fetchFromGitAPI('repositories','q=+user:' + name)
+	.then(setReposData)
+	.then(setUserData)
+	.catch(addErrorMessage);
 
-	//Fetching from Git API function using a promise
-	function promiseFromGitAPI(table,query){
-		return new Promise(function(resolve,reject){
-			function checkHttpResponse(response){
-				if (response.status >= 200 && response.status <= 304){
-					return response;
-				}
-				else{
-					var error = new Erorr(response.statusText);
-					error.response = response;
-					throw error;
-				}
+	function fetchFromGitAPI(table, query){
+		//checking if the http request suceeded
+		function checkHttpResponse(response){
+			if (response.status >= 200 && response.status <= 304){
+				return response;
 			}
-			//parsing te response to Json object
-			function parseJson(response){
-				return response.json();
+			else{
+				var error = new Erorr(response.statusText);
+				error.response = response;
+				throw error;
 			}
-
-			fetch('https://api.github.com/search/' + table + '?' + query)
-			.then(checkHttpResponse)
-			.then(parseJson)
-			.then(resolve)
-			.catch(reject);
-		});
+		}
+		//parsing te response to Json object
+		function parseJson(response){
+			return response.json();
+		}
+		return fetch('https://api.github.com/search/' + table + '?' + query)
+		.then(checkHttpResponse)
+		.then(parseJson);
 	}
-	//pulling users repositories and updating the new object
-	//with number of repos his type (user) and name
-	function settingReposData(userRepos){
+
+	function setReposData(userRepos){
 		dataObj.numberOfRepos = userRepos.total_count;
-		dataObj.type = 'user';
-		dataObj.userName = name;
-		return promiseFromGitAPI('users','q=' + name);
+		return fetchFromGitAPI('users', 'q=' + name);
 	}
 	//pulling the users avatar url pushes to the main data array
 	// and calls the view rendering function
-	function settingUsersData(usersInfo){
+	function setUserData(usersInfo){
 		dataObj.avatarURL = usersInfo.items[0].avatar_url;
+		dataObj.userName = name;
+		dataObj.type = 'user';
 		data.push(dataObj);
 		listNode = patch(listNode, renderData());
 	}
