@@ -12,13 +12,13 @@ The app is managed by an eventbus.
 
 The app is constructed of two different modules:
 
-* Query module - resposible for creating and updating the top section of the app.
+* View module - resposible for rendering the whole view 
   Registered events:
-  * 'renderView'-'queryView' - updating the query section view
+  * 'renderView'-'updateView' - updating the app's view
 
 
-* List of fetches module - responsible for creating and updating a section that presents a list of attempts to fetch information from github, any fetch can end with retriving and presenting the user's information or an error message. 
+* List of fetches module - responsible for updating the fetches model(a list of attempts to fetch information from github), any fetch can end with retriving and presenting the user's information or an error message. 
   Registered events:
-  * 'fetch'-'user' - fetching a user and adding it to the data list.
-  * 'renderView' - 'listView' - updating the list of attempts for fetching data from github
+  * 'fetch'-'user' - fetching a user and adding it to the data list, if fails adds an error message.
+  * 'removeError' - 'removeError' - removing an error from the fetches list
 
